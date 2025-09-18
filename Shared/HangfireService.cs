@@ -13,11 +13,11 @@ public static class HangfireService
         string aspAppName
     )
     {
-        string connectionString = "Host=localhost;Port=5432;Database=visiology;Username=postgres;Password=postgres";
-        string hangfireSchemaName = "hangfire";
+        string connectionString = "Host=localhost;Port=5432;Database=visiology;Username=postgres;Password=postgres;ApplicationName=Hangfire";
+        string hangfireSchemaName = "_____hangfire";
         TimeSpan шnvisibilityTimeout = TimeSpan.FromMinutes(15);
         var connFactory = new NpgsqlConnectionFactory(connectionString, new PostgreSqlStorageOptions() { SchemaName = hangfireSchemaName });
-        var serverCount = 2;
+        var serverCount = Consts.ServerCount;
 
         var result = services
             .AddHangfire((provider, configuration) =>
@@ -43,7 +43,8 @@ public static class HangfireService
                 serverOptions.ServerName = $"{aspAppName}_hgf{localIndex}";
                 serverOptions.WorkerCount = 1;
                 serverOptions.CancellationCheckInterval = TimeSpan.FromMilliseconds(500);
-                serverOptions.Queues = [$"queue{localIndex}"];
+                //serverOptions.Queues = [$"queue{localIndex}"];
+                serverOptions.Queues = [$"queue1"];
                 serverOptions.ServerTimeout = TimeSpan.FromSeconds(15);
             });
         }
@@ -51,11 +52,5 @@ public static class HangfireService
         return result;
     }
 
-    [AutomaticRetry(Attempts = 3)]
-    public static void Job_Wait(Guid guid, int delay, int dataset)
-    {
-        Console.WriteLine($"Start.Job_Wait: dataset = {dataset}");
-        Thread.Sleep(delay * 1000);
-        Console.WriteLine($"End.Job_Wait: dataset = {dataset}");
-    }
+
 }
