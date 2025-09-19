@@ -43,7 +43,6 @@ public static class HangfireService
                 serverOptions.WorkerCount = 1;
                 serverOptions.CancellationCheckInterval = TimeSpan.FromMilliseconds(500);
                 serverOptions.Queues = [$"queue{localIndex}"];
-                //serverOptions.Queues = [$"queue1"];
                 serverOptions.ServerTimeout = TimeSpan.FromSeconds(15);
             });
         }

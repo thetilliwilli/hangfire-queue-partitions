@@ -53,7 +53,6 @@ public class JobController
         Random random = new Random();
         var randomInt = random.Next(1, Consts.ServerCount);
         var newQueue = $"queue{randomInt}";
-        //var newQueue = $"queue1";
         return newQueue;
     }
 }
