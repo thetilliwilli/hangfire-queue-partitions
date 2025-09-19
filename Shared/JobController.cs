@@ -52,42 +52,8 @@ public class JobController
 
         Random random = new Random();
         var randomInt = random.Next(1, Consts.ServerCount);
-        //var newQueue = $"queue{randomInt}";
-        var newQueue = $"queue1";
+        var newQueue = $"queue{randomInt}";
+        //var newQueue = $"queue1";
         return newQueue;
     }
-
-    //private static dynamic GetJobsInfo()
-    //{
-    //    //var jobs
-    //    dynamic result = new { };
-    //    var monitoringApi = JobStorage.Current.GetMonitoringApi();
-    //    //JobStorage.Current.Moni
-    //    var processingJobs = monitoringApi.ProcessingJobs(0, int.MaxValue).Select(x => new
-    //    {
-    //        Id = x.Key,
-    //        Job = x.Value,
-    //    }).ToList();
-
-    //    //for ()
-
-
-
-    //    var qs = monitoringApi.Queues();
-    //    var enqueuedJobs;
-    //    foreach (var q in qs)
-    //    {
-    //        var enqueuedJobs = monitoringApi.EnqueuedJobs(q.Name, 0, int.MaxValue).Select(x => new
-    //        {
-    //            Id = x.Key,
-    //            Job = x.Value
-    //        });
-
-    //    }
-    //    //Console.WriteLine(JsonSerializer.Serialize(qs));
-
-
-    //    Console.WriteLine(JsonSerializer.Serialize(result));
-    //    return result;
-    //}
 }

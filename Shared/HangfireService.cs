@@ -8,14 +8,14 @@ namespace Shared;
 
 public static class HangfireService
 {
-    public static IServiceCollection AddHangfireVisiology(
+    public static IServiceCollection AddHangfire(
         [NotNull] this IServiceCollection services,
         string aspAppName
     )
     {
-        string connectionString = "Host=localhost;Port=5432;Database=visiology;Username=postgres;Password=postgres;ApplicationName=Hangfire";
+        string connectionString = "Host=localhost;Port=5432;Database=test;Username=postgres;Password=postgres;ApplicationName=Hangfire";
         string hangfireSchemaName = "_____hangfire";
-        TimeSpan шnvisibilityTimeout = TimeSpan.FromMinutes(15);
+        TimeSpan invisibilityTimeout = TimeSpan.FromMinutes(15);
         var connFactory = new NpgsqlConnectionFactory(connectionString, new PostgreSqlStorageOptions() { SchemaName = hangfireSchemaName });
         var serverCount = Consts.ServerCount;
 
@@ -30,7 +30,7 @@ public static class HangfireService
                     new PostgreSqlStorageOptions()
                     {
                         SchemaName = hangfireSchemaName,
-                        InvisibilityTimeout = шnvisibilityTimeout,
+                        InvisibilityTimeout = invisibilityTimeout,
                     });
             });
 
@@ -39,12 +39,11 @@ public static class HangfireService
             var localIndex = i;
             result.AddHangfireServer(serverOptions =>
             {
-                // Так мы сможем настроить, сколько параллельных загрузок может быть, что прям круто
                 serverOptions.ServerName = $"{aspAppName}_hgf{localIndex}";
                 serverOptions.WorkerCount = 1;
                 serverOptions.CancellationCheckInterval = TimeSpan.FromMilliseconds(500);
-                //serverOptions.Queues = [$"queue{localIndex}"];
-                serverOptions.Queues = [$"queue1"];
+                serverOptions.Queues = [$"queue{localIndex}"];
+                //serverOptions.Queues = [$"queue1"];
                 serverOptions.ServerTimeout = TimeSpan.FromSeconds(15);
             });
         }

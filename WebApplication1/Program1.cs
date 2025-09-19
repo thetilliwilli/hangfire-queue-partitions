@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 var appIndex = Assembly.GetExecutingAssembly().GetName().Name.Last().ToString();
 var appName = $"srv{appIndex}";
 Console.WriteLine($"App started: {appName}");
-builder.Services.AddHangfireVisiology(appName);
+builder.Services.AddHangfire(appName);
 
 
 var app = builder.Build();

@@ -1,5 +1,5 @@
 ﻿namespace Shared;
 public static class Consts
 {
-    public static int ServerCount = 10;
+    public static int ServerCount = 12;
 }
