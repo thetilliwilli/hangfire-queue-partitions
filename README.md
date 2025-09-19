@@ -3,7 +3,7 @@
 
 # решение
 - создать M Hangfire серверов по одному worker в каждом сервере. настроить каждый сервер на одну очередь. настройки происходят внутри класса HangfireService
-- выставление каждой Hangfire задачи будет проходить через абстракцию над Hangfire в классе JobController. при наличие одного сервера целостность обеспечивается с помощью lock ![alt text](docs/image6.png)
+- выставление каждой Hangfire задачи будет проходить через абстракцию над Hangfire в классе JobController. при наличие одного сервера целостность обеспечивается с помощью lock ![alt text](docs/image6.png). внутри lock мы генерируем привязку datatset => queueIndex и присоединяем мета информацию к каждой задачи с помощью `JobStorage.Current.GetConnection().SetJobParameter(jobId, "boundDatasetId", datasetId);` далее считываем с помощью `var boundDatasetId = storageConnection.GetJobParameter(job.Key, "boundDatasetId");`
 - сами методы которые выполняются внутри Hangfire задач хранятся в CustomService. код напиисан таким образом что при невыполнение условий и каком либо сбое произойдёт Exception внутри задачи
 
 # примеры запуска
